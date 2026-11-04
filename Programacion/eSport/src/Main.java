@@ -2,26 +2,65 @@
 //jugador validando todos los campos de entrada y llevando a cabo la entrada y salida
 //de datos desde consola.
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static boolean error;
-    public static StringBuilder equipo;
+    public static DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static void main(String[] args) {
+        pedirEquipo();
         pedirJugador();
     }
 
     public static void pedirEquipo(){ // funcion que pide los datos del equipo
-        System.out.println("Nombre del equipo");
-        String nombreEqui = sc.nextLine();
+        do{
+            try{
+                System.out.println("Nombre del equipo");
+                String nombreEqui = sc.nextLine();
+            }catch(Exception e){
+                System.out.println("Nombre no válido");
+            }
+        } while (error);
 
-        System.out.println("Fecha de fundación");
-        String fechaFund = sc.nextLine();
+        error=true;
+        do{
+            try{
+                System.out.println("Fecha de fundación (dd/MM/yyyy)"); // la fecha tiene que ser antes de hoy
+                String entrada = sc.nextLine();
+                LocalDate fechaFun = LocalDate.parse(entrada, formato);
 
-        System.out.println("Jugadores"); // los equipos tienen que tener 2-6 jugadores si o si
-        int numJugadores = sc.nextInt();
+                if(fechaFun.){
+
+                }
+                error = false;
+            }catch(Exception e){
+                System.out.println("Fecha incorrecta");
+            }
+        }while (error);
+
+        error = true;
+        do{
+            try{
+                System.out.println("Jugadores"); // los equipos tienen que tener 2-6 jugadores si o si
+                String numJugadores = sc.nextLine();
+
+                Pattern pat = Pattern.compile("^[2-6]$");
+                Matcher mat = pat.matcher(numJugadores);
+                if (mat.matches ()) {
+                    error = false;
+                } else {
+                    System.out.println("Número inválido");
+                }
+            }catch(Exception e){
+                System.out.println("No has añadido un numero");
+            }
+        }while (error);
 
     } // los equipos tienen que ser pares
 
@@ -58,7 +97,7 @@ public class Main {
 
         do{
             try{
-                System.out.println("Fecha de nacimiento");
+                System.out.println("Fecha de nacimiento (dd/MM/yyyy)");
                 String fechaNaci = sc.nextLine();// fecha
                 error = false;
             } catch (Exception e){
@@ -78,7 +117,7 @@ public class Main {
 
         do{
             try{
-                System.out.println("Rol");
+                System.out.println("Rol"); //healer, dps, tanque
                 String rol = sc.nextLine();
                 error = false;
             } catch(Exception e){
@@ -95,9 +134,5 @@ public class Main {
                 System.out.println("No has metido un numero correcto");
             }
         } while(error);
-    }
-
-    public static void escribirEquipo(){
-        // escribir todos los datos recogidos de un equipo
     }
 }
