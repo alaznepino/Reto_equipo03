@@ -64,7 +64,6 @@ public class Main {
                 } else{
                     error = false;
                 }
-
             }catch(Exception e){
                 System.out.println("Fecha incorrecta");
             }
@@ -88,11 +87,13 @@ public class Main {
             }
         }while (error);
 
-    } // los equipos tienen que ser pares
+    }
 
     public static void pedirJugador(){ // funcion que pide los datos de los jugadores
+        error = true;
         do{
             try{
+                sc.nextLine();
                 System.out.println("Dime tu nombre");
                 String nombre = sc.nextLine();
                 error = false;
@@ -101,6 +102,7 @@ public class Main {
             }
         } while (error);
 
+        error = true;
         do{
             try{
                 System.out.println("Dime tu apellido");
@@ -111,6 +113,7 @@ public class Main {
             }
         } while(error);
 
+        error = true;
         do{
             try{
                 System.out.println("Dime tu nacionalidad");
@@ -121,16 +124,19 @@ public class Main {
             }
         }while(error);
 
+        error = true;
         do{
             try{
                 System.out.println("Fecha de nacimiento (dd/MM/yyyy)");
-                String fechaNaci = sc.nextLine();// fecha
+                String entrada = sc.nextLine();//
+                LocalDate fechaNac = LocalDate.parse(entrada, formato);// fecha
                 error = false;
             } catch (Exception e){
                 System.out.println("No has metido una fecha correcta");
             }
         } while(error);
 
+        error = true;
         do{
             try{
                 System.out.println("Nickname");
@@ -141,6 +147,7 @@ public class Main {
             }
         } while(error);
 
+        error = true;
         do{
             try{
                 System.out.println("Rol"); //healer, dps, tanque
@@ -151,6 +158,7 @@ public class Main {
             }
         } while(error);
 
+        error = true;
         do{
             try{
                 System.out.println("Sueldo");
@@ -160,9 +168,5 @@ public class Main {
                 System.out.println("No has metido un numero correcto");
             }
         } while(error);
-    }
-
-    public static void fechaHoy(){
-
     }
 }
