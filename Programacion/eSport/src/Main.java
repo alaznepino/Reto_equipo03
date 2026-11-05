@@ -4,6 +4,7 @@
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,15 +13,38 @@ public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static boolean error;
     public static DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static LocalDate fechaHoy = LocalDate.now();
 
     public static void main(String[] args) {
-        pedirEquipo();
-        pedirJugador();
+        menu();
     }
 
+    public static void  menu() {
+        int numero = 0;
+        do {
+            try {
+                System.out.println("Escoge el dato a añadir \n" +
+                        "1. Datos del equipo \n" +
+                        "2. Datos del jugador \n" +
+                        "3. Salir"
+                );
+                numero = sc.nextInt();
+                switch (numero) {
+                    case 1 -> pedirEquipo();
+                    case 2 -> pedirJugador();
+                    case 3 -> System.out.println("Fin");
+                    default -> System.out.println("Opción no válida");
+                }
+            }catch (InputMismatchException e){
+                System.out.println("No es un número");
+                sc.next();
+            }
+        }while(numero != 3);
+    }
     public static void pedirEquipo(){ // funcion que pide los datos del equipo
         do{
             try{
+                sc.nextLine();
                 System.out.println("Nombre del equipo");
                 String nombreEqui = sc.nextLine();
             }catch(Exception e){
@@ -35,10 +59,12 @@ public class Main {
                 String entrada = sc.nextLine();
                 LocalDate fechaFun = LocalDate.parse(entrada, formato);
 
-                if(fechaFun.){
-
+                if(fechaFun.isAfter(fechaHoy)){
+                    System.out.println("La fecha tiene que ser anterior a hoy");
+                } else{
+                    error = false;
                 }
-                error = false;
+
             }catch(Exception e){
                 System.out.println("Fecha incorrecta");
             }
@@ -134,5 +160,9 @@ public class Main {
                 System.out.println("No has metido un numero correcto");
             }
         } while(error);
+    }
+
+    public static void fechaHoy(){
+
     }
 }
