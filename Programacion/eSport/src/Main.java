@@ -11,9 +11,10 @@ public class Main {
         String respuesta;
         do {
             try {
+                int id= Integer.parseInt(JOptionPane.showInputDialog("Introduce el numero de identificación del jugador"));
                 String jugador = JOptionPane.showInputDialog("Introduce el nombre del jugador");
                 int num = Integer.parseInt(JOptionPane.showInputDialog("Introduce el numero del jugador"));
-                elaborarPlantilla(jugador, num, Equipo);
+                elaborarPlantilla(jugador, num, Equipo, id);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,e.getMessage());
             }
@@ -23,8 +24,8 @@ public class Main {
 
 
     }
-    public static void elaborarPlantilla(String jugador,int num,String Equipo){
-     plantilla.append(jugador).append("-"+num+"\n");
+    public static void elaborarPlantilla(String jugador,int num,String Equipo, int id){
+     plantilla.append(id+"-").append(jugador).append("-"+num+"\n");//Numero opcional(Por los atributos base datos)
      JOptionPane.showMessageDialog(null,plantilla);
     }
 }
