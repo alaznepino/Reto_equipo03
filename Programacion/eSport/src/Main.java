@@ -164,7 +164,15 @@ public class Main {
             }
         } while (valido || error);
         //A futuro esto se sustituira por un sistema de listas (supongo)
-        jugador.append(nickname + ": \n  " + nombre + " \n  " +  apellido + " \n  " + nacionalidad + " \n  " + fechaNacimiento + " \n  " +  equipo + " \n  " +  rol + " \n  " + sueldo +" \n  " );
+        jugador.append(nickname + ": " +
+                "\n  Nombre: " + nombre + " " +
+                "\n  Apellido: " +  apellido + " " +
+                "\n  Nacionalidad: " + nacionalidad + " " +
+                "\n  Fecha de nacimiento: " + fechaNacimiento + " " +
+                "\n  Equipo: " +  equipo + " " +
+                "\n  Rol: " +  rol + " " +
+                "\n  Sueldo:" + sueldo +"$ " +
+                "\n  " );
         return jugador;
 
     }
@@ -198,7 +206,9 @@ public class Main {
             }
         }while(error);
 
-        equipo.append(nombre + ": \n  " + fechaCreacion + " \n   Jugadores:");
+        equipo.append(nombre + ": " +
+                "\n  Fecha de creacion: " + fechaCreacion + " " +
+                "\n   Jugadores:");
 
 
         error = true;
@@ -215,7 +225,7 @@ public class Main {
                 for ( int i=1 ; i <= nJugadores; i++){
                     System.out.println("Introduce el nombre del jugador Nº "+ i +":");
                     jugadores = sc.nextLine();
-                    equipo.append(" \n    " + jugadores);
+                    equipo.append(" \n         "+ i + ". " + jugadores);
                 }
                 error = false;
             }catch (InputMismatchException e){
