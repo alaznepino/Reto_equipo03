@@ -2,18 +2,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    // El formato de la fecha es una global porque se utiliza en mas de una funcion
+    public static Pattern patronNombre = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]{2,15}$"),
+            patronNickname = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9 @_-]{2,15}$");
 
     public static void main(String[] args) {
-        // Desarrollar un programa para guardar en memoria los datos de un equipo y de un
-        //jugador validando todos los campos de entrada y llevando a cabo la entrada y salida
-        //de datos desde consola.
         menu();
-
     }
     public static void mostrarMenu(){
         System.out.println("======MENU======");
@@ -31,6 +31,7 @@ public class Main {
                 opcion = sc.nextInt();
                 switch (opcion) {
                     case 1:
+                        sc.nextLine();
                         jugador = jugador();
                         System.out.println(jugador);
                         break;
@@ -58,13 +59,32 @@ public class Main {
         int sueldo = 0;
         StringBuilder jugador = new StringBuilder();
         boolean valido = false, error;
+
+        //error = true;
+        //            do {
+        //                try {
+        //                System.out.println("Introduce el nombre:");
+        //                j.nombre = sc.nextLine();
+        //                    Pattern pat = Pattern.compile("^(?=.*[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ])[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]{2,15}$");
+        //                    Matcher mat = pat.matcher(j.nombre);
+        //                    if (!mat.matches()) {
+        //                        throw new IllegalArgumentException("Nombre no válido");
+        //                    } else error = false;
+        //                } catch (IllegalArgumentException e) {
+        //                    System.out.println(e.getMessage());
+        //                }
+        //            } while (error);
+
+
         error = true;
         do {
             try {
                 System.out.println("Introduce el nombre del jugador:");
-                sc.nextLine();
                 nombre = sc.nextLine();
-                error = false;
+                Matcher mat = patronNombre.matcher(nombre);
+                    if (!mat.matches()) {
+                        System.out.println("Nombre no válido");
+                    } else error = false;
             }catch (Exception e){
                 System.out.println("Formato de nombre incorrecto");
             }
@@ -77,7 +97,10 @@ public class Main {
             try {
                 System.out.println("Introduce el apellido del jugador:");
                 apellido = sc.nextLine();
-                error = false;
+                Matcher mat = patronNombre.matcher(apellido);
+                if (!mat.matches()) {
+                    System.out.println("Apellido no válido");
+                } else error = false;
             }catch (Exception e){
                 System.out.println("Formato de apellido incorrecto");
             }
@@ -89,7 +112,10 @@ public class Main {
             try {
                 System.out.println("Introduce el nacionalidad del jugador:");
                 nacionalidad = sc.nextLine();
-                error = false;
+                Matcher mat = patronNombre.matcher(nacionalidad);
+                if (!mat.matches()) {
+                    System.out.println("Nacionalidad no válido");
+                } else error = false;
             }catch (Exception e){
                 System.out.println("Formato de nacionalidad incorrecto");
             }
@@ -102,7 +128,7 @@ public class Main {
             try {
                 System.out.println("Introduce la fecha de nacimiento del jugador (dd/mm/yyyy):");
                 fechaNacimiento = sc.nextLine();
-                LocalDate fechaValida = LocalDate.parse(fechaNacimiento, formatoFecha);
+                LocalDate.parse(fechaNacimiento, formatoFecha);
                 error = false;
             }catch (Exception e){
                 System.out.println("Formato de fecha incorrecto");
@@ -110,30 +136,58 @@ public class Main {
         }while(error);
 
 
-        // seguir
+
         error = true;
         do {
             try {
                 System.out.println("Introduce el nickname del jugador:");
                 nickname = sc.nextLine();
-                error = false;
+                Matcher mat = patronNickname.matcher(nickname);
+                if (!mat.matches()) {
+                    System.out.println("Nickname no válido");
+                } else error = false;
             }catch (Exception e){
                 System.out.println("Formato de nickname incorrecto");
             }
 
         }while(error);
 
+
+        //ESTO NO FUNCIONA
         error = true;
         do {
             try {
-                System.out.println("Introduce el rol del jugador:");
+                System.out.println("Introduce el rol del jugador (Tanque, Dps o Support):");
                 rol = sc.nextLine();
+                if (rol.equalsIgnoreCase("tanque")  || rol.equalsIgnoreCase("dps") || rol.equalsIgnoreCase("suport")) {
+                    valido = true;
+                    System.out.println("Rol no valido");
+                } else {
+                    valido = false;
+                }
                 error = false;
             }catch (Exception e){
                 System.out.println("Formato de rol incorrecto");
             }
 
-        }while(error);
+        }while(valido || error);
+        //error = true;
+        //        do {
+        //            try{
+        //                System.out.println("Introduce el sueldo del jugador:");
+        //                sueldo = sc.nextInt();
+        //                if (sueldo <= 1220) {
+        //                    valido = true;
+        //                    System.out.println("El sueldo debe superar el sueldo minimo inter-profesional (1.221$)");
+        //                } else {
+        //                    valido = false;
+        //                }
+        //                error = false;
+        //            }catch (InputMismatchException e){
+        //                System.out.println("Formato de sueldo incorrecto");
+        //                sc.nextLine();
+        //            }
+        //        } while (valido || error);
         error = true;
         do {
             try {
