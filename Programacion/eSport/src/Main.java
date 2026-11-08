@@ -17,7 +17,6 @@ public class Main {
     public static DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static LocalDate fechaHoy = LocalDate.now();
 
-
     public static void main(String[] args) {
         menu();
     }
@@ -89,7 +88,7 @@ public class Main {
             }
         }while (error);
 
-        // Número de jugadores
+        // 3. Número de jugadores
         // Validación: solo pueden ser entre 2 y 6.
         do{
             try{
@@ -120,7 +119,6 @@ public class Main {
         StringBuilder jugador = new StringBuilder();
         Pattern patNombre = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]{2,30}$");
         Pattern patNick = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_\\s]{2,30}$");
-
         LocalDate fechaLimite = LocalDate.now().minusYears(18);
 
         String dniJugador = "";
@@ -131,6 +129,7 @@ public class Main {
         String nickname = "";
         String rol = "";
         double sueldo = 0;
+        final double SMI = 1221.00;
 
         // DNI de jugador
         // Validación: debe tener 8 números y una letra mayúscula.
@@ -234,7 +233,8 @@ public class Main {
             }
         } while(error);
 
-        // nickname del jugador
+        // Nickname del jugador
+        // Validación: Puede contener letras, caracteres y barrabajas.
         do{
             try{
                 error = true;
@@ -253,30 +253,42 @@ public class Main {
             }
         } while(error);
 
-        // rol del jugador
+        // Rol del jugador
+        // Validación: puede ser Healer, DPS o Tanque
         do{
             try{
                 error = true;
-                System.out.println("Dime tu rol"); //healer, dps, tanque
+                System.out.println("Dime tu rol (Healer, DPS, Tanque)");
                 rol = sc.nextLine();
-                error = false;
+
+                if(rol.equalsIgnoreCase("healer") || rol.equalsIgnoreCase("DPS") || rol.equalsIgnoreCase("Tanque")){
+                    error = false;
+                } else{
+                    System.out.println("Error: rol no válido.");
+                }
             } catch(Exception e){
-                System.out.println("No has metido un rol correcto");
+                System.out.println("Error al leer la entrada por consola.");
             }
         } while(error);
 
-        // sueldo del jugador
+        // Sueldo del jugador
+        // Validación: tiene que ser mayor al SMI
         do{
             try{
                 error = true;
-                System.out.println("Sueldo");
+                System.out.println("Sueldo en euros: ");
                 sueldo = sc.nextDouble();
-                error = false;
-            } catch(Exception e){
+
+                if(sueldo > SMI){
+                    error = false;
+                } else{
+                    System.out.println("Error: el sueldo debe ser mayor al SMI");
+                }
+            } catch(InputMismatchException e){
                 System.out.println("No has metido un numero correcto");
+                sc.nextLine();
             }
         } while(error);
-
         return jugador.append("=====DATOS DEL EQUIPO=====\n")
                 .append("DNI del jugador: ").append(dniJugador)
                 .append("\n")
