@@ -5,6 +5,7 @@
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -117,6 +118,11 @@ public class Main {
 
     public static StringBuilder pedirJugador(){ // funcion que pide los datos de los jugadores
         StringBuilder jugador = new StringBuilder();
+        Pattern patNombre = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]{2,30}$");
+        Pattern patNick = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_\\s]{2,30}$");
+
+        LocalDate fechaLimite = LocalDate.now().minusYears(18);
+
         String dniJugador = "";
         String nombre = "";
         String apellido = "";
@@ -127,62 +133,104 @@ public class Main {
         double sueldo = 0;
 
         // DNI de jugador
+        // Validación: debe tener 8 números y una letra mayúscula.
         do{
             try{
                 error = true;
-                System.out.println("Proporciona tu DNI");
-                dniJugador = sc.nextLine();
+                System.out.println("Proporciona tu DNI (8 números y una letra)");
+                dniJugador = sc.nextLine().toUpperCase();
+
+                if(dniJugador.matches("^[0-9]{8}[A-Z]$")){
+                    error = false;
+                } else{
+                    System.out.println("No es un DNI válido");
+                }
             }catch(Exception e){
-                System.out.println("No es un DNI válido");
+                System.out.println("Error al leer el DNI");
             }
         } while(error);
 
-        // nombre de jugador
+        // Nombre de jugador
+        // Validación: Debe tener entre 2 y 30 caracteres y contener solo letras (y espacios).
         do{
             try{
                 error = true;
                 System.out.println("Dime tu nombre");
                 nombre = sc.nextLine();
-                error = false;
+
+                Matcher mat = patNombre.matcher(nombre);
+
+                if (mat.matches()) {
+                    error = false;
+                } else {
+                    System.out.println("El nombre debe tener entre 2 y 30 caracteres y contener solo letras.");
+                }
+
             } catch (Exception e){
                 System.out.println("No has metido un nombre correcto");
             }
         } while (error);
 
-        // apellido de jugador
+        // Apellido de jugador
+        // Validación: Debe tener entre 2 y 30 caracteres y contener solo letras (y espacios).
+
         do{
             try{
                 error = true;
                 System.out.println("Dime tu apellido");
                 apellido = sc.nextLine();
-                error = false;
+
+                Matcher mat = patNombre.matcher(apellido);
+
+                if (mat.matches()) {
+                    error = false;
+                } else {
+                    System.out.println("El apellido debe tener entre 2 y 30 caracteres y contener solo letras.");
+                }
             } catch(Exception e){
                 System.out.println("No has metido un apellido correcto");
             }
         } while(error);
 
-        // nacionalidad de jugador
+        // Nacionalidad de jugador
+        // Validación: igual que el nombre y apellido.
         do{
             try{
                 error = true;
                 System.out.println("Dime tu nacionalidad");
                 nacionalidad = sc.nextLine();
-                error = false;
+
+                Matcher mat = patNombre.matcher(nacionalidad);
+
+                if (mat.matches()) {
+                    error = false;
+                } else {
+                    System.out.println("La nacionalidad debe tener entre 2 y 30 caracteres y contener solo letras.");
+                }
+
             }catch(Exception e){
                 System.out.println("No has metido una nacionalidad correcta");
             }
         }while(error);
 
-        // fecha de nacimiendo del jugador
+        // Fecha de nacimiento del jugador
+        // Validación: que sea mayor de 18 años
         do{
             try{
                 error = true;
                 System.out.println("Fecha de nacimiento (dd/MM/yyyy)");
                 String entrada = sc.nextLine();
                 fechaNac = LocalDate.parse(entrada, formato);
-                error = false;
-            } catch (Exception e){
-                System.out.println("No has metido una fecha correcta");
+
+                if(fechaNac.isAfter(fechaLimite)){
+                    System.out.println("El jugador debe ser mayor de 18 años");
+                } else{
+                    error = false;
+                }
+            } catch (DateTimeParseException e){
+                System.out.println("Formato de fecha incorrecta.");
+            } catch(Exception e){
+                System.out.println("Error en la lectura.");
             }
         } while(error);
 
@@ -190,9 +238,16 @@ public class Main {
         do{
             try{
                 error = true;
-                System.out.println("Nickname");
+                System.out.println("Dime tu nickname");
                 nickname = sc.nextLine();
-                error = false;
+
+                Matcher mat = patNick.matcher(nickname);
+
+                if (mat.matches()) {
+                    error = false;
+                } else {
+                    System.out.println("El nickname debe tener entre 2 y 30 caracteres.");
+                }
             } catch(Exception e){
                 System.out.println("No has metido un nickname correcto");
             }
@@ -202,7 +257,7 @@ public class Main {
         do{
             try{
                 error = true;
-                System.out.println("Rol"); //healer, dps, tanque
+                System.out.println("Dime tu rol"); //healer, dps, tanque
                 rol = sc.nextLine();
                 error = false;
             } catch(Exception e){
