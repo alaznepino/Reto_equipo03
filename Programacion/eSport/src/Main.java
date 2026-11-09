@@ -1,6 +1,3 @@
-//Desarrollar un programa para guardar en memoria los datos de un equipo y de un
-//jugador validando todos los campos de entrada y llevando a cabo la entrada y salida
-//de datos desde consola.
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -128,26 +125,9 @@ public class Main {
         LocalDate fechaNac = null;
         String nickname = "";
         String rol = "";
+        String equipo = "";
         double sueldo = 0;
         final double SMI = 1221.00;
-
-        // DNI de jugador
-        // Validación: debe tener 8 números y una letra mayúscula.
-        do{
-            try{
-                error = true;
-                System.out.println("Proporciona tu DNI (8 números y una letra)");
-                dniJugador = sc.nextLine().toUpperCase();
-
-                if(dniJugador.matches("^[0-9]{8}[A-Z]$")){
-                    error = false;
-                } else{
-                    System.out.println("No es un DNI válido");
-                }
-            }catch(Exception e){
-                System.out.println("Error al leer el DNI");
-            }
-        } while(error);
 
         // Nombre de jugador
         // Validación: Debe tener entre 2 y 30 caracteres y contener solo letras (y espacios).
@@ -271,6 +251,27 @@ public class Main {
             }
         } while(error);
 
+        // Equipo al que pertenece
+        // Validación: mismo que nickname
+
+        do {
+            try {
+                error = true;
+                System.out.println("Introduce el equipo el que pretenece el jugador:");
+                equipo = sc.nextLine();
+
+                Matcher mat = patNick.matcher(equipo);
+                if(mat.matches()) {
+                    error = false;
+                } else {
+                    System.out.println("El equipo debe tener entre 2 y 30 caracteres.");
+                }
+                error = false;
+            }catch (Exception e){
+                System.out.println("Formato de equipo incorrecto");
+            }
+        }while(error);
+
         // Sueldo del jugador
         // Validación: tiene que ser mayor al SMI
         do{
@@ -304,8 +305,11 @@ public class Main {
                 .append("\n")
                 .append("Rol: ").append(rol)
                 .append("\n")
+                .append("Equipo: ").append(equipo)
+                .append("\n")
                 .append("Sueldo: ").append(sueldo)
                 .append("\n")
                 ;
     }
 }
+
