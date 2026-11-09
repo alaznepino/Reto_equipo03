@@ -214,9 +214,9 @@ public class Main {
 
     }
     public static StringBuilder equipo(){
-        String nombre = null, fechaCreacion = null, jugadores = null;
-        int nJugadores = 0;
-        boolean error = false;
+        String nombre = null, fechaCreacion = null, jugadores;
+        int nJugadores;
+        boolean error;
         StringBuilder equipo = new StringBuilder();
 
 
