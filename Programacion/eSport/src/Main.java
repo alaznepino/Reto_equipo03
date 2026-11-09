@@ -145,7 +145,7 @@ public class Main {
             try {
                 System.out.println("Introduce el rol del jugador (Tanque, Dps o Support):");
                 rol = sc.nextLine();
-                if (!rol.equalsIgnoreCase("tanque")  && !rol.equalsIgnoreCase("dps") && !rol.equalsIgnoreCase("suport")) {
+                if (!rol.equalsIgnoreCase("tanque")  && !rol.equalsIgnoreCase("dps") && !rol.equalsIgnoreCase("support")) {
                     valido = true;
                     System.out.println("Rol no valido");
                 } else {
@@ -208,12 +208,15 @@ public class Main {
 
 
         error = true;
+        sc.nextLine();
         do {
             try {
                 System.out.println("Introduce el nombre del equipo:");
-                sc.nextLine();
                 nombre = sc.nextLine();
-                error = false;
+                Matcher mat = patronNickname.matcher(nombre);
+                if (!mat.matches()) {
+                    System.out.println("Nombre de equipo no válido");
+                } else error = false;
             }catch (Exception e){
                 System.out.println("Formato de nombre de equipo incorrecto");
             }
@@ -224,6 +227,7 @@ public class Main {
             try {
                 System.out.println("Introduce la fecha de creacion del equipo (dd/mm/yyyy):");
                 fechaCreacion = sc.nextLine();
+                LocalDate.parse(fechaCreacion, formatoFecha);
                 error = false;
             }catch (Exception e){
                 System.out.println("Formato de nombre de equipo incorrecto");
