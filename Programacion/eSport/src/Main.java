@@ -60,20 +60,7 @@ public class Main {
         StringBuilder jugador = new StringBuilder();
         boolean valido = false, error;
 
-        //error = true;
-        //            do {
-        //                try {
-        //                System.out.println("Introduce el nombre:");
-        //                j.nombre = sc.nextLine();
-        //                    Pattern pat = Pattern.compile("^(?=.*[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ])[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]{2,15}$");
-        //                    Matcher mat = pat.matcher(j.nombre);
-        //                    if (!mat.matches()) {
-        //                        throw new IllegalArgumentException("Nombre no válido");
-        //                    } else error = false;
-        //                } catch (IllegalArgumentException e) {
-        //                    System.out.println(e.getMessage());
-        //                }
-        //            } while (error);
+
 
 
         error = true;
