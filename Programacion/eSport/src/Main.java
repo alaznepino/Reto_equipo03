@@ -153,13 +153,12 @@ public class Main {
         }while(error);
 
 
-        //ESTO NO FUNCIONA
         error = true;
         do {
             try {
                 System.out.println("Introduce el rol del jugador (Tanque, Dps o Support):");
                 rol = sc.nextLine();
-                if (rol.equalsIgnoreCase("tanque")  || rol.equalsIgnoreCase("dps") || rol.equalsIgnoreCase("suport")) {
+                if (!rol.equalsIgnoreCase("tanque")  && !rol.equalsIgnoreCase("dps") && !rol.equalsIgnoreCase("suport")) {
                     valido = true;
                     System.out.println("Rol no valido");
                 } else {
@@ -171,23 +170,7 @@ public class Main {
             }
 
         }while(valido || error);
-        //error = true;
-        //        do {
-        //            try{
-        //                System.out.println("Introduce el sueldo del jugador:");
-        //                sueldo = sc.nextInt();
-        //                if (sueldo <= 1220) {
-        //                    valido = true;
-        //                    System.out.println("El sueldo debe superar el sueldo minimo inter-profesional (1.221$)");
-        //                } else {
-        //                    valido = false;
-        //                }
-        //                error = false;
-        //            }catch (InputMismatchException e){
-        //                System.out.println("Formato de sueldo incorrecto");
-        //                sc.nextLine();
-        //            }
-        //        } while (valido || error);
+
         error = true;
         do {
             try {
